@@ -1,45 +1,46 @@
 @ /audio root:audio {
-  #%pxr.format 2
+  #%praxis.version 5.0.0-beta-1
   @ ./output1 audio:output {
-    #%graph.x 619
-    #%graph.y 157
+    #%graph.x 927
+    #%graph.y 63
+    .channels 2
   }
   @ ./level1 audio:analysis:level {
-    #%graph.x 259
-    #%graph.y 33
+    #%graph.x 556
+    #%graph.y 37
   }
-  @ ./player1 audio:sampling:player {
-    #%graph.x 57
-    #%graph.y 101
+  @ ./player1 audio:player {
+    #%graph.x 363
+    #%graph.y 63
     .sample [file "resources/audio/water drops ster eff.wav"]
     .loop true
   }
   @ ./level2 audio:analysis:level {
-    #%graph.x 259
-    #%graph.y 115
+    #%graph.x 556
+    #%graph.y 206
   }
   @ ./send1 core:routing:send {
-    #%graph.x 592
-    #%graph.y 243
+    #%graph.x 1029
+    #%graph.y 191
     .address /tinkerforge/left.value
   }
   @ ./send2 core:routing:send {
-    #%graph.x 589
-    #%graph.y 372
+    #%graph.x 1029
+    #%graph.y 366
     .address /tinkerforge/right.value
   }
   @ ./start-trigger1 core:start-trigger {
-    #%graph.x 26
-    #%graph.y 31
+    #%graph.x 143
+    #%graph.y 154
   }
   @ ./scale1 core:math:scale {
-    #%graph.x 437
-    #%graph.y 223
+    #%graph.x 836
+    #%graph.y 168
     .x2 0.5
   }
   @ ./scale2 core:math:scale {
-    #%graph.x 411
-    #%graph.y 346
+    #%graph.x 836
+    #%graph.y 377
     .x2 0.5
   }
   ~ ./level1!out ./output1!in-1

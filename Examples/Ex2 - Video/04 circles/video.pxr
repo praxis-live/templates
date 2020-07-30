@@ -1,10 +1,10 @@
 @ /video root:video {
   #%graph.comment A simple circle drawing example ported from a \nPharo (Smalltalk) example by Serge Stinckwich.\nhttps://youtu.be/IphXSTIfaY0\n\nTry editing the code, or swapping in the 3D version.
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
   .renderer OpenGL
   .width 1024
   .height 768
-  .fps 60
+  .fps 60.0
   @ ./output-1 video:output {
     #%graph.x 283
     #%graph.y 180

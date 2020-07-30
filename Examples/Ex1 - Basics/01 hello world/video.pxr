@@ -1,10 +1,10 @@
 @ /video root:video {
   #%autostart true
   #%graph.comment Hello World\n\nA simple video example piping a noise source through\na semi-transparent image.\n\nUse the play button above to start and stop the pipeline.\nUse the properties button above to change frame size,\nframe rate or renderer (software or OpenGL).
-  #%praxis.version 4.0.0-rc1
-  .width 400
-  .height 300
-  .fps 20.0
+  #%praxis.version 5.0.0-beta-1
+  .renderer OpenGL
+  .width 800
+  .height 600
   @ ./screen video:output {
     #%graph.x 448
     #%graph.y 351
@@ -12,6 +12,7 @@
     #%graph.colors Purple
     .title "Hello World"
     .always-on-top true
+    .show-cursor true
   }
   @ ./image video:still {
     #%graph.x 253

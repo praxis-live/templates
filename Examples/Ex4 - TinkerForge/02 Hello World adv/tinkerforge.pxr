@@ -1,49 +1,52 @@
 @ /tinkerforge root:tinkerforge {
+  #%praxis.version 5.0.0-beta-1
+  .host localhost
+  .port 4223
   @ ./lcd20x4-1 tinkerforge:lcd20x4 {
-    #%graph.x 207
-    #%graph.y 156
+    #%graph.x -921
+    #%graph.y 169
     .uid "<auto>"
     .line-2 "Hello World!"
     .backlight true
     .button-mode Signal
   }
   @ ./hel-send core:routing:send {
-    #%graph.x 540
-    #%graph.y 70
+    #%graph.x -563
+    #%graph.y 191
     .address /audio/hel.play
   }
   @ ./lo-send core:routing:send {
-    #%graph.x 539
-    #%graph.y 118
+    #%graph.x -563
+    #%graph.y 278
     .address /audio/lo.play
   }
   @ ./world-send core:routing:send {
-    #%graph.x 538
-    #%graph.y 164
+    #%graph.x -563
+    #%graph.y 364
     .address /audio/world.play
   }
   @ ./hel core:variable {
-    #%graph.x 46
-    #%graph.y 154
+    #%graph.x -1078
+    #%graph.y 103
     .value HEL
   }
   @ ./lo core:variable {
-    #%graph.x 50
-    #%graph.y 233
+    #%graph.x -1078
+    #%graph.y 240
     .value "   LO"
   }
   @ ./world core:variable {
-    #%graph.x 47
-    #%graph.y 351
+    #%graph.x -1085
+    #%graph.y 382
     .value "      WORLD"
   }
   @ ./clear core:variable {
-    #%graph.x 234
-    #%graph.y 444
+    #%graph.x -1081
+    #%graph.y 520
   }
   @ ./delay1 core:timing:delay {
-    #%graph.x 601
-    #%graph.y 295
+    #%graph.x -851
+    #%graph.y 598
     .time 0.3
   }
   ~ ./lcd20x4-1!button-1 ./hel-send!in

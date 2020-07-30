@@ -1,10 +1,11 @@
 @ /video root:video {
   #%graph.comment Slideshow\n\nA simple slideshow example that fades\nbetween images in a folder.
   #%graph.colors Green
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
+  .renderer OpenGL
   .width 400
   .height 300
-  .fps 20.0
+  .fps 60.0
   @ ./screen video:output {
     #%graph.x 700
     #%graph.y 374

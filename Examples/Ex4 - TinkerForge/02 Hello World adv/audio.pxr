@@ -1,39 +1,37 @@
 @ /audio root:audio {
+  #%praxis.version 5.0.0-beta-1
   @ ./output1 audio:output {
-    #%graph.x 580
-    #%graph.y 226
+    #%graph.x 776
+    #%graph.y 186
+    .channels 2
   }
-  @ ./hel audio:sampleplayer {
+  @ ./hel audio:player {
     #%graph.x 54
-    #%graph.y 33
+    #%graph.y 43
     .sample [file "resources/audio/hel.wav"]
   }
-  @ ./lo audio:sampleplayer {
-    #%graph.x 56
-    #%graph.y 227
+  @ ./lo audio:player {
+    #%graph.x 180
+    #%graph.y 222
     .sample [file "resources/audio/lo.wav"]
   }
-  @ ./world audio:sampleplayer {
-    #%graph.x 54
-    #%graph.y 422
+  @ ./world audio:player {
+    #%graph.x 306
+    #%graph.y 375
     .sample [file "resources/audio/world.wav"]
   }
-  @ ./gain1 audio:gain {
-    #%graph.x 416
-    #%graph.y 225
-    .level 0.65
-  }
-  @ ./mono-delay1 audio:delay:mono-delay {
-    #%graph.x 211
-    #%graph.y 226
+  @ ./mono-delay1 audio:fx:delay {
+    #%graph.x 487
+    #%graph.y 166
     .time 0.1
     .feedback 0.6
-    .mix 0.5
   }
-  ~ ./gain1!out ./output1!in-1
-  ~ ./output1!in-2 ./gain1!out
-  ~ ./mono-delay1!out ./gain1!in
-  ~ ./mono-delay1!in ./hel!out
-  ~ ./lo!out ./mono-delay1!in
-  ~ ./world!out ./mono-delay1!in
+  ~ ./mono-delay1!out-1 ./output1!in-1
+  ~ ./mono-delay1!out-2 ./output1!in-2
+  ~ ./hel!out-1 ./mono-delay1!in-1
+  ~ ./hel!out-2 ./mono-delay1!in-2
+  ~ ./lo!out-1 ./mono-delay1!in-1
+  ~ ./lo!out-2 ./mono-delay1!in-2
+  ~ ./world!out-1 ./mono-delay1!in-1
+  ~ ./world!out-2 ./mono-delay1!in-2
 }

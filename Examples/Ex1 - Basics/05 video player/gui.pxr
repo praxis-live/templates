@@ -1,6 +1,5 @@
 @ /gui root:gui {
-  #%pxr.format 2
-  #%pxr.format 2
+  #%praxis.version 5.0.0-beta-1
   @ ./filefield1 gui:filefield {
     .label "Video File"
     .binding /video/player.video

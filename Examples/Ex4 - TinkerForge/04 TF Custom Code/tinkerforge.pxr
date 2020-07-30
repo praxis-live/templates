@@ -1,5 +1,7 @@
 @ /tinkerforge root:tinkerforge {
-  #%pxr.format 2
+  #%praxis.version 5.0.0-beta-1
+  .host localhost
+  .port 4223
   @ ./lcd20x4-1 tinkerforge:lcd20x4 {
     #%graph.x 536
     #%graph.y 102
@@ -69,12 +71,12 @@
   @ ./left core:property {
     #%graph.x 82
     #%graph.y 64
-    .value 0.19288789722725505
+    .value 0.25135364075909894
   }
   @ ./right core:property {
     #%graph.x 84
     #%graph.y 161
-    .value 0.09407366665732046
+    .value 0.04145964512655969
   }
   ~ ./custom1!out ./lcd20x4-1!line-1
   ~ ./custom1!out ./lcd20x4-1!line-2

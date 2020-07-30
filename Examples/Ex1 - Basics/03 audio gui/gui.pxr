@@ -1,5 +1,5 @@
 @ /gui root:gui {
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
   @ ./button1 gui:button {
     .label "Stab 1"
     .binding /audio/fx1.play

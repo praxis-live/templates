@@ -1,8 +1,9 @@
 @ /audio root:audio {
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
   @ ./output audio:output {
     #%graph.x 1055
     #%graph.y 78
+    .channels 2
   }
   @ ./start core:start-trigger {
     #%graph.x 51

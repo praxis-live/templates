@@ -1,5 +1,7 @@
 @ /tinkerforge root:tinkerforge {
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
+  .host localhost
+  .port 4223
   @ ./lcd20x4-1 tinkerforge:lcd20x4 {
     #%graph.x 327
     #%graph.y 34

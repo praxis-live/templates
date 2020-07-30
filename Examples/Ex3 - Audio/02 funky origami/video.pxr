@@ -1,7 +1,7 @@
 @ /video root:video {
   #%graph.colors Green
   #%graph.comment FUNKY ORIGAMI - video patch\n\nSingle video sketch accepts FFT data from audio\npatch and renders 3D shapes.
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
   .renderer OpenGL
   .width 1024
   .height 768
@@ -21,7 +21,7 @@
 
     @Inject Property x, y, z;
     
-    @P(0) float\[\] fft;
+    @P(0) @Transient float\[\] fft;
 
     int tubeRes = 24;
     double\[\] tubeX = new double\[tubeRes\];
@@ -76,9 +76,6 @@
 
     \}
 "
-    .fft "rO0ABXVyAAJbRgucgYki4AxCAgAAeHAAAAAgP5EWcD4It9w94K3XPcKGPT469lY9+6T1PqowKD5O
-co0+m50tPn6WMz6IAms+3G/uPoviGz5mEZs+Y7SoPnWUCz4t4Ek+F/VYPhTJQz4SZEg9wXUEPdGd
-Pj2nInk9O/Y3PS8scj1EEbg9ChIgPSLn7zyUp/E8gX03PL1fEjyd/0k="
   }
   ~ ./fft-vis!out ./fft-vis!in
   ~ ./fft-vis!out ./output-1!in

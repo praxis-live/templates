@@ -1,7 +1,7 @@
 @ /video root:video {
   #%autostart true
   #%graph.comment Video Player\n\nPlay a video through a series of colour and\n3D transforms.\n\nNo video file included. Choose one using the\ncustom GUI.\n\nThe colourbalance and 3D transform components\nare currently available in the additional components\nrepository. See www.praxislive.org\n
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
   .renderer OpenGL
   .width 800
   .height 600

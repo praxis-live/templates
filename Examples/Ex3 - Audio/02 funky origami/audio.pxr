@@ -1,10 +1,11 @@
 @ /audio root:audio {
   #%graph.colors Purple
   #%graph.comment FUNKY ORIGAMI - audio patch\n\nExample demonstrating new coding features in v3 including\nsupport for lists and binary data for sending FFT data.
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
   @ ./output-1 audio:output {
     #%graph.x 1519
     #%graph.y 338
+    .channels 2
   }
   @ ./duo-osc audio:custom {
     #%graph.x 786
@@ -287,13 +288,10 @@
     .wet 0.2
   }
   @ ./fft audio:custom {
-    #%graph.x 1219
-    #%graph.y 633
+    #%graph.x 1242
+    #%graph.y 608
     #%graph.comment Custom FFT component sends\nfrequency data to video patch.\n\nGPL code ported from Beads\nhttp://www.beadsproject.net\n(c) Holger Crysandt / Ollie Bown
-    .code "import org.jaudiolibs.pipes.Buffer;
-import org.jaudiolibs.pipes.impl.SingleInOut;
-import java.io.*;
-
+    .code "
 
     @In(1)
     AudioIn in;
@@ -324,21 +322,22 @@ import java.io.*;
         if (send) \{
             send = false;
             try \{
-                PBytes.OutputStream bos = new PBytes.OutputStream(powerAvg.length * 4);
-                ObjectOutputStream oos = new ObjectOutputStream(bos);
-                oos.writeObject(powerAvg);
-                oos.close();
-                powerData.send(bos.toBytes());
+                powerData.send(PBytes.serialize(powerAvg));
             \} catch (Exception ex) \{
                 log(ERROR, ex);
             \}
         \}
     \}
 
-    class FFT extends SingleInOut \{
+    class FFT extends Pipe \{
 
+        FFT() \{
+            super(1,1);
+        \}
+        
         @Override
-        protected void process(Buffer buffer, boolean bln) \{
+        protected void process(List<Buffer> buffers) \{
+            Buffer buffer = buffers.get(0);
             arrayCopy(buffer.getData(), 0, dataCopy, writeIdx, blockSize);
             writeIdx += blockSize;
             if (writeIdx >= dataCopy.length) \{
@@ -745,13 +744,10 @@ import java.io.*;
   ~ ./PM3!out ./chorus-1!in-1
   ~ ./PM3!out ./chorus-1!in-2
   ~ ./output-1!in-1 ./reverb-1!out-1
-  ~ ./reverb-1!out-2 ./fft!in
-  ~ ./fft!out ./output-1!in-2
   ~ ./chorus-1!out-1 ./mixer-6s!in-1l
   ~ ./chorus-1!out-2 ./mixer-6s!in-1r
   ~ ./mixer-6s!out-1 ./reverb-1!in-1
   ~ ./mixer-6s!out-2 ./reverb-1!in-2
-  ~ ./fft!power-data ./send-1!in
   ~ ./mono-kit!out ./mixer-6s!in-3l
   ~ ./mono-kit!out ./mixer-6s!in-3r
   ~ ./bd!out ./mono-kit!play-1
@@ -779,4 +775,7 @@ import java.io.*;
   ~ ./sequence!out-3 ./mixer-6s!mute-3
   ~ ./sequence!trigger ./every-4!out
   ~ ./custom-1!recalculate ./sequence!out-4
+  ~ ./reverb-1!out-2 ./fft!in
+  ~ ./fft!out ./output-1!in-2
+  ~ ./fft!power-data ./send-1!in
 }

@@ -1,10 +1,13 @@
 @ /video root:video {
   #%autostart true
   #%graph.comment Video Capture\n\nSimple video capture example, with animated\nnegative bars drawn on top of webcam image.\n\nRequires webcam (obviously!)
-  #%praxis.version 4.0.0-rc1
+  #%praxis.version 5.0.0-beta-1
+  .renderer OpenGL
+  .width 800
+  .height 600
   @ ./output video:output {
-    #%graph.x 615
-    #%graph.y 351
+    #%graph.x 722
+    #%graph.y 329
     .title "Video Capture"
     .always-on-top true
   }
@@ -22,31 +25,18 @@
     #%graph.colors Red
   }
   @ ./bars video:custom {
-    #%graph.x 464
-    #%graph.y 282
+    #%graph.x 230
+    #%graph.y 724
     #%graph.comment A custom video code component.\n\nUse right-click -> Edit code to see\nor modify the component.
     .code "
 
-    @In(1)
-    PImage in;
-
-    @P(1)
-    @ReadOnly
-    Property bar1X;
-    @P(2)
-    @ReadOnly
-    Property bar1W;
-    @P(3)
-    @ReadOnly
-    Property bar2X;
-    @P(4)
-    @ReadOnly
-    Property bar2W;
+    @P(1) @ReadOnly Property bar1X;
+    @P(2) @ReadOnly Property bar1W;
+    @P(3) @ReadOnly Property bar2X;
+    @P(4) @ReadOnly Property bar2W;
 
     @Override
     public void draw() \{
-        copy(in);
-        release(in);
         
         if (!bar1X.isAnimating()) \{
             bar1X.to(random(-50, width + 50)).in(4);
@@ -63,7 +53,13 @@
     \}
 "
   }
+  @ ./composite video:composite {
+    #%graph.x 492
+    #%graph.y 302
+    .mode Difference
+  }
   ~ ./start-trigger!out ./capture!play
-  ~ ./bars!out ./output!in
-  ~ ./capture!out ./bars!in
+  ~ ./capture!out ./composite!in
+  ~ ./bars!out ./composite!src
+  ~ ./composite!out ./output!in
 }

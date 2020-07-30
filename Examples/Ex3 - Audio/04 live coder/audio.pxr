@@ -1,10 +1,11 @@
 @ /audio root:audio {
-  #%pxr.format 2
   #%graph.colors Purple
   #%graph.comment Basic example setup for live coding music.\nUse it as a base!\nSome samples borrowed from the excellent FoxDot (foxdot.org),\nalthough it's easy to change them if you want to.\n
+  #%praxis.version 5.0.0-beta-1
   @ ./output-1 audio:output {
     #%graph.x 1202
     #%graph.y 284
+    .channels 2
   }
   @ ./clock-1 audio:clock {
     #%graph.x 51
@@ -264,23 +265,24 @@ import java.util.stream.Stream;
   @ ./drums audio:custom {
     #%graph.x 540
     #%graph.y 180
+    #%graph.minimized true
     .code "
 
     @Out(1)
     AudioOut out;
     
-    @P(1) @OnChange(\"updateTables\") @Port(false)
-    Table sample1;
-    @P(2) @OnChange(\"updateTables\") @Port(false)
-    Table sample2;
-    @P(3) @OnChange(\"updateTables\") @Port(false)
-    Table sample3;
-    @P(4) @OnChange(\"updateTables\") @Port(false)
-    Table sample4;
-    @P(5) @OnChange(\"updateTables\") @Port(false)
-    Table sample5;
-    @P(6) @OnChange(\"updateTables\") @Port(false)
-    Table sample6;
+    @P(1) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample1;
+    @P(2) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample2;
+    @P(3) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample3;
+    @P(4) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample4;
+    @P(5) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample5;
+    @P(6) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample6;
 
     @T(1) Trigger play1;
     @T(2) Trigger play2;
@@ -361,23 +363,24 @@ import java.util.stream.Stream;
   @ ./fx audio:custom {
     #%graph.x 550
     #%graph.y 430
+    #%graph.minimized true
     .code "
 
     @Out(1)
     AudioOut out;
     
-    @P(1) @OnChange(\"updateTables\") @Port(false)
-    Table sample1;
-    @P(2) @OnChange(\"updateTables\") @Port(false)
-    Table sample2;
-    @P(3) @OnChange(\"updateTables\") @Port(false)
-    Table sample3;
-    @P(4) @OnChange(\"updateTables\") @Port(false)
-    Table sample4;
-    @P(5) @OnChange(\"updateTables\") @Port(false)
-    Table sample5;
-    @P(6) @OnChange(\"updateTables\") @Port(false)
-    Table sample6;
+    @P(1) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample1;
+    @P(2) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample2;
+    @P(3) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample3;
+    @P(4) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample4;
+    @P(5) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample5;
+    @P(6) @OnChange(\"updateTables\") @Config.Port(false)
+    AudioTable sample6;
 
     @T(1) Trigger play1;
     @T(2) Trigger play2;
@@ -458,6 +461,7 @@ import java.util.stream.Stream;
   @ ./syn1 audio:custom {
     #%graph.x 546
     #%graph.y 679
+    #%graph.minimized true
     .code "
 
     final String SW = \"Saw\";
@@ -564,6 +568,7 @@ import java.util.stream.Stream;
   @ ./syn2 audio:custom {
     #%graph.x 546
     #%graph.y 955
+    #%graph.minimized true
     .code "
 
     @Out(1) AudioOut out;
@@ -642,10 +647,7 @@ import java.util.stream.Stream;
   @ ./fft audio:custom {
     #%graph.x 908
     #%graph.y 194
-    .code "import org.jaudiolibs.pipes.Buffer;
-import org.jaudiolibs.pipes.impl.SingleInOut;
-import java.io.*;
-
+    .code "
 
     @In(1)
     AudioIn in;
@@ -682,10 +684,15 @@ import java.io.*;
         \}
     \}
 
-    class FFT extends SingleInOut \{
+    class FFT extends Pipe \{
+        
+        FFT() \{
+            super(1,1);
+        \}
 
         @Override
-        protected void process(Buffer buffer, boolean bln) \{
+        protected void process(List<Buffer> buffers) \{
+            Buffer buffer = buffers.get(0);
             arrayCopy(buffer.getData(), 0, dataCopy, writeIdx, blockSize);
             writeIdx += blockSize;
             if (writeIdx >= dataCopy.length) \{
@@ -853,8 +860,8 @@ import java.io.*;
   ~ ./syn2!out ./mixer-6s!in-4r
   ~ ./live-coder!syn-2 ./syn2!note
   ~ ./reverb-1!out-1 ./output-1!in-1
-  ~ ./fft!power-data ./send-1!in
   ~ ./reverb-1!out-2 ./output-1!in-2
   ~ ./mixer-6s!out-1 ./fft!in
   ~ ./fft!out ./reverb-1!in-1
+  ~ ./fft!power-data ./send-1!in
 }
